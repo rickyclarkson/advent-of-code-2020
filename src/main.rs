@@ -110,6 +110,19 @@ fn day2() {
     print!("Day 2 part 2: There are {} valid passwords.\n", num_valid);
 }
 
+fn day3() {
+  let lines = read_a_file("./day3_trees.txt").unwrap();
+  let mut trees = 0;
+  let mut x = 0;
+  for line in lines {
+    if line.chars().nth(x % line.chars().count()).unwrap() == '#' {
+        trees += 1;
+    }
+    x += 3;
+  }
+  print!("Day 3: We encounter {} trees\n", trees);
+}
+
 fn main() {
-    day2();
+    day3();
 }
