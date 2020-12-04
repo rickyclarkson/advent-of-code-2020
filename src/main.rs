@@ -142,6 +142,71 @@ fn day3() {
     );
 }
 
+fn day4() {
+    use std::collections::HashMap;
+
+  struct Passport {
+      birth_year: String,
+      issue_year: String,
+      expiration_year: String,
+      height: String,
+      hair_color: String,
+      eye_color: String,
+      passport_id: String,
+      country_id: String
+  }
+
+  impl Passport {
+      fn is_valid(&self) -> bool {
+          !self.birth_year.is_empty() &&
+              !self.issue_year.is_empty() &&
+              !self.expiration_year.is_empty() &&
+              !self.height.is_empty() &&
+              !self.hair_color.is_empty() &&
+              !self.eye_color.is_empty() &&
+              !self.passport_id.is_empty()
+      }
+
+      fn parse(lines: &[String]) -> Passport {
+        let attributes : HashMap<&str, &str> = lines.iter().flat_map(|line| line.split(" "))
+            .map(|attr| attr.split(":").collect::<Vec<&str>>())
+            .map(|parts| (parts[0], parts[1]))
+            .collect();
+        
+        Passport {
+            birth_year: attributes.get("byr").unwrap_or(&"").to_string(),
+            issue_year: attributes.get("iyr").unwrap_or(&"").to_string(),
+            expiration_year: attributes.get("eyr").unwrap_or(&"").to_string(),
+            height: attributes.get("hgt").unwrap_or(&"").to_string(),
+            hair_color: attributes.get("hcl").unwrap_or(&"").to_string(),
+            eye_color: attributes.get("ecl").unwrap_or(&"").to_string(),
+            passport_id: attributes.get("pid").unwrap_or(&"").to_string(),
+            country_id: attributes.get("cid").unwrap_or(&"").to_string()
+        }
+      }
+  }
+
+  let lines = read_a_file("./day4_passports.txt").unwrap(); // I manually added a blank line to this.
+  let mut current_window_start = 0; // where the current passport begins
+  let mut num_valid = 0;
+  for (index, line) in lines.iter().enumerate() {
+      if line.is_empty() {
+          let passport = Passport::parse(&lines[current_window_start..index]);
+          if passport.is_valid() {
+            num_valid += 1;
+          }
+          current_window_start = index + 1;
+      }
+  }
+  print!("There are {} valid passports\n", num_valid);
+}
+
 fn main() {
-    day3();
+    if false {
+        day1();
+        day2();
+        day3();
+    }
+
+    day4();
 }
