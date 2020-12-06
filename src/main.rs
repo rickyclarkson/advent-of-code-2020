@@ -235,12 +235,30 @@ fn day4() {
     print!("There are {} valid passports\n", num_valid);
 }
 
+fn day5() {
+    let lines = read_a_file("./day5_boarding_passes.txt").unwrap();
+    print!(
+        "Highest seat number: {}\n",
+        lines
+            .iter()
+            .map(|line| line
+                .replace('F', "0")
+                .replace('B', "1")
+                .replace('L', "0")
+                .replace('R', "1"))
+            .map(|bin| u32::from_str_radix(&bin, 2).unwrap())
+            .max()
+            .unwrap()
+    );
+}
+
 fn main() {
     if false {
         day1();
         day2();
         day3();
+        day4();
     }
 
-    day4();
+    day5();
 }
