@@ -258,13 +258,41 @@ fn day5() {
     }
 }
 
+fn day6() {
+    use std::collections::HashSet;
+
+    struct Group {
+        lines: Vec<String>
+    }
+
+    impl Group {
+        fn count_yeses(&self) -> usize {
+            self.lines.iter().flat_map(|line| line.chars()).collect::<HashSet<char>>().len()
+        }
+    }
+
+    let lines = read_a_file("./day6_customs_forms.txt").unwrap();
+    let mut groups : Vec<Group> = vec!();
+    groups.push(Group { lines: vec!() });
+    for line in lines {
+        if line.is_empty() {
+            groups.push(Group { lines: vec!() });
+        } else {
+            groups.last_mut().unwrap().lines.push(line);
+        }
+    }
+
+    print!("Total number of yeses, {}\n", groups.iter().map(|group| group.count_yeses()).sum::<usize>());
+}
+
 fn main() {
     if false {
         day1();
         day2();
         day3();
         day4();
+        day5();
     }
 
-    day5();
+    day6();
 }
