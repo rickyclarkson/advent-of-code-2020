@@ -266,12 +266,28 @@ fn day6() {
     }
 
     impl Group {
-        fn count_yeses(&self) -> usize {
+        fn _count_yeses(&self) -> usize {
             self.lines
                 .iter()
                 .flat_map(|line| line.chars())
                 .collect::<HashSet<char>>()
                 .len()
+        }
+
+        fn count_all_yeses(&self) -> usize {
+            let mut all_said_yes: HashSet<char> = self.lines[0].chars().collect();
+            for line in &self.lines[1..] {
+                let mut to_remove: Vec<char> = vec![];
+                for c in &all_said_yes {
+                    if !line.contains(|x| x == *c) {
+                        to_remove.push(*c);
+                    }
+                }
+                for r in &to_remove {
+                    all_said_yes.remove(&r);
+                }
+            }
+            all_said_yes.len()
         }
     }
 
@@ -290,7 +306,7 @@ fn day6() {
         "Total number of yeses, {}\n",
         groups
             .iter()
-            .map(|group| group.count_yeses())
+            .map(|group| group.count_all_yeses())
             .sum::<usize>()
     );
 }
