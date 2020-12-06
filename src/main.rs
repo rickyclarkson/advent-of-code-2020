@@ -237,17 +237,17 @@ fn day4() {
 
 fn day5() {
     let lines = read_a_file("./day5_boarding_passes.txt").unwrap();
-    let mut seat_numbers : Vec<u32> =
-        lines
-            .iter()
-            .map(|line| line
-                .replace('F', "0")
+    let mut seat_numbers: Vec<u32> = lines
+        .iter()
+        .map(|line| {
+            line.replace('F', "0")
                 .replace('B', "1")
                 .replace('L', "0")
-                .replace('R', "1"))
-            .map(|bin| u32::from_str_radix(&bin, 2).unwrap())
-            .collect();
-            
+                .replace('R', "1")
+        })
+        .map(|bin| u32::from_str_radix(&bin, 2).unwrap())
+        .collect();
+
     seat_numbers.sort();
 
     for (index, number) in seat_numbers.iter().enumerate() {
