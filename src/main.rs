@@ -406,7 +406,6 @@ fn day7() {
         bags: &Vec<BagInfo>,
         mut seen_count: &mut HashMap<String, u32>,
     ) -> u32 {
-        println!("recursive_count({:#?}, .., {:#?}", bag, seen_count);
         if seen_count.contains_key(&bag.color) {
             return *seen_count.get(&bag.color).unwrap();
         }
