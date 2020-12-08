@@ -387,7 +387,7 @@ fn day7() {
                 if bag_info
                     .contents
                     .iter()
-                    .map(|(number, sub_color)| sub_color)
+                    .map(|(_number, sub_color)| sub_color)
                     .any(|c| *c == other.color)
                     && (*seen.get(&other.color).unwrap_or(&false)
                         || recursive_contains(color, other, bag_infos, seen))
@@ -401,17 +401,51 @@ fn day7() {
         }
     }
 
-    let mut count = 0;
-    let mut seen = HashMap::new();
-    for bag in &bags {
-        if recursive_contains("shiny gold", &bag, &bags, &mut seen) {
-            count += 1;
+    fn recursive_count(
+        bag: &BagInfo,
+        bags: &Vec<BagInfo>,
+        mut seen_count: &mut HashMap<String, u32>,
+    ) -> u32 {
+        println!("recursive_count({:#?}, .., {:#?}", bag, seen_count);
+        if seen_count.contains_key(&bag.color) {
+            return *seen_count.get(&bag.color).unwrap();
         }
+        let mut count = 1; // self
+        for (number, sub_color) in &bag.contents {
+            count += number
+                * recursive_count(
+                    bags.iter().find(|b| b.color == *sub_color).unwrap(),
+                    &bags,
+                    &mut seen_count,
+                );
+        }
+        seen_count.insert(bag.color.to_string(), count);
+        count
     }
 
+    if false {
+        let mut count = 0;
+        let mut seen = HashMap::new();
+        for bag in &bags {
+            if recursive_contains("shiny gold", &bag, &bags, &mut seen) {
+                count += 1;
+            }
+        }
+
+        println!(
+            "There are {} bag colors that can contain a shiny gold bag",
+            count
+        );
+    }
+
+    let mut seen_count = HashMap::new();
     println!(
-        "There are {} bag colors that can contain a shiny gold bag",
-        count
+        "A shiny gold bag has {} bags inside it",
+        recursive_count(
+            bags.iter().find(|b| b.color == "shiny gold").unwrap(),
+            &bags,
+            &mut seen_count
+        ) - 1 // self
     );
 }
 
