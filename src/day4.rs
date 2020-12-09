@@ -1,6 +1,6 @@
 pub fn day4() {
-    use std::collections::HashMap;
     use crate::common_io;
+    use std::collections::HashMap;
 
     struct Passport {
         birth_year: u32,
@@ -91,4 +91,3 @@ pub fn day4() {
     }
     print!("There are {} valid passports\n", num_valid);
 }
-

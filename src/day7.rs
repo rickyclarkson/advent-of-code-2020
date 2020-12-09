@@ -48,8 +48,8 @@ pub fn day7() {
         });
     }
 
-    use std::collections::HashMap;
     use crate::common_io;
+    use std::collections::HashMap;
 
     /// Finds if the supplied bag contains the specified color.
     /// If it's not immediately present, recurses to see if one of the bag's contents contains
@@ -135,4 +135,3 @@ pub fn day7() {
         ) - 1 // self
     );
 }
-

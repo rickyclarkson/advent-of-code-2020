@@ -31,4 +31,3 @@ pub fn day3() {
             * count_trees(&lines, 1, 2)
     );
 }
-

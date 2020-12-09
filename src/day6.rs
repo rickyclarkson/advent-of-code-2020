@@ -1,6 +1,6 @@
 pub fn day6() {
-    use std::collections::HashSet;
     use crate::common_io;
+    use std::collections::HashSet;
 
     struct Group {
         lines: Vec<String>,
@@ -51,4 +51,3 @@ pub fn day6() {
             .sum::<usize>()
     );
 }
-

@@ -1,7 +1,7 @@
 pub fn day2() {
+    use crate::common_io;
     use std::convert::TryInto;
     use std::str::FromStr;
-    use crate::common_io;
 
     struct PolicyAndPassword {
         min_occurrences: u32,
@@ -71,4 +71,3 @@ pub fn day2() {
         .count();
     print!("Day 2 part 2: There are {} valid passwords.\n", num_valid);
 }
-
